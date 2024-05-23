@@ -1,9 +1,5 @@
-Flask==3.0.3
-numpy==1.25.2
-numpy==1.23.3
-opencv_contrib_python==4.7.0.68
-opencv_contrib_python_headless==4.7.0.68
-opencv_python==4.7.0.68
-opencv_python_headless==4.7.0.68
-PyAudio==0.2.14
-PyAutoGUI==0.9.54
+PyAutoGUI~=0.9.54
+opencv-python~=4.7.0.68
+PyAudio~=0.2.14
+numpy~=1.23.3
+flask~=3.0.3
