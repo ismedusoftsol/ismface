@@ -5,33 +5,13 @@ import pyautogui as pyautogui
 from flask import Flask, render_template, Response
 import cv2
 import math
-import pyaudio
-import wave
 import numpy as np
 
 app = Flask(__name__)
 
 camera = cv2.VideoCapture(0)  # Use the default camera
 
-# Audio recording settings
-FORMAT = pyaudio.paInt16
-CHANNELS = 1
-RATE = 44100
-CHUNK = 1024
-RECORD_DURATION = 10  # Duration to record when distortion is detected (in seconds)
-THRESHOLD = 1000  # Example threshold for distortion detection
-# Initialize audio stream
-stream = None  # Will be initialized later
-# Initialize PyAudio
-audio = pyaudio.PyAudio()
 
-
-# # Initialize audio stream
-# stream = audio.open(format=FORMAT,
-#                     channels=CHANNELS,
-#                     rate=RATE,
-#                     frames_per_buffer=CHUNK,
-#                     input=True)
 
 
 def calculate_direction(previous_x, current_x):
@@ -41,49 +21,6 @@ def calculate_direction(previous_x, current_x):
         return "right"
     else:
         return "none"
-
-
-def start_audio_recording():
-    global stream
-    stream = audio.open(format=FORMAT,
-                        channels=CHANNELS,
-                        rate=RATE,
-                        frames_per_buffer=CHUNK,
-                        input=True)
-    record_audio()
-
-def stop_audio_recording():
-    global stream
-    if stream is not None:
-        stream.stop_stream()
-        stream.close()
-        global is_recording
-        global audio_frames
-        is_recording = False
-        # Save audio to file
-        if not os.path.exists("recordings"):
-            os.makedirs("recordings")
-        audio_path = os.path.join("recordings", f"recorded_audio_.wav")
-        wf = wave.open(audio_path, 'wb')
-        wf.setnchannels(CHANNELS)
-        wf.setsampwidth(audio.get_sample_size(FORMAT))
-        wf.setframerate(RATE)
-        wf.writeframes(b''.join(audio_frames))
-        wf.close()
-
-        print(f"Audio saved as: {audio_path}")
-
-
-def record_audio():
-    global is_recording
-    global audio_frames
-
-    is_recording = True
-    audio_frames = []
-
-    while is_recording:
-        data = stream.read(CHUNK)
-        audio_frames.append(data)
 
 
 
@@ -123,8 +60,7 @@ def generate_frames():
                             # Save the photo
                             save_photo(frame)
                             angle_start_time = None
-                            # Start audio recording
-
+                           
                     else:
                         angle_start_time = None
                 previous_x = center_x
