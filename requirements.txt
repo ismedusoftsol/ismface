@@ -1,5 +1,4 @@
 PyAutoGUI~=0.9.54
 opencv-python~=4.7.0.68
-PyAudio~=0.2.14
 numpy~=1.23.3
 flask~=3.0.3
