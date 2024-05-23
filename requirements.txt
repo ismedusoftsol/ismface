@@ -1,0 +1,7 @@
+opencv-python~=4.7.0.68
+dlib~=19.24.2
+numpy~=1.25.2
+PyAutoGUI~=0.9.54
+PyAudio~=0.2.14
+flask~=3.0.3
+imutils~=0.5.4
